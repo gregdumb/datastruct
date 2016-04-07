@@ -1,3 +1,7 @@
+// Created by Gregory Brisebois
+// for CS-124 Data Structures,
+// Professor Kamran Eftekari
+
 // REMEMBER:
 // T 		= AN INT
 // ELEMENT 	= THE OBJECT/POINTER
@@ -103,7 +107,7 @@ void Element<T>::deleteElems()
 	if(getNext() != NULL)
 		getNext()->deleteElems();
 		
-	delete this;
+	// delete this; //was causing crash
 }
 
 

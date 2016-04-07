@@ -1,7 +1,9 @@
+// Created by Gregory Brisebois
+// for CS-124 Data Structures,
+// Professor Kamran Eftekari
+
 #include <iostream>
 
-#include "element.h"
-#include "linkedlist.h"
 #include "stack.h"
 #include "queue.h"
 
@@ -36,7 +38,9 @@ int main()
 	std::cout << "The rest: " << std::endl;
 	queue->print();
 	
-	/*
+	delete queue;
+	
+	
 	int popped;
 	stack->pop(popped);
 	
@@ -55,7 +59,7 @@ int main()
 	
 	std::cout << "The rest: " << std::endl;
 	stack->print();
-	*/
+	
 	
 	/*
 	LinkedList<int> * list = new LinkedList<int>;

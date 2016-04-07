@@ -1,3 +1,14 @@
+// Created by Gregory Brisebois
+// for CS-124 Data Structures,
+// Professor Kamran Eftekari
+
+// REMEMBER:
+// T 		= AN INT
+// ELEMENT 	= THE OBJECT/POINTER
+
+#define LINKEDLIST
+#include "element.h"
+
 template <class T>
 class LinkedList
 {
@@ -5,18 +16,22 @@ class LinkedList
 		Element<T>* head;
 		Element<T>* tail;
 		
-	public:
-		Element<T>* getHead();
-		Element<T>* getTail();
+		Element<T>* toElem(const T & item);
 		
-		bool addToHead(Element<T>*);
-		bool addToTail(Element<T>*);
+	public:
+		T getHead();
+		T getTail();
+		
+		bool addToHead(const T & item);
+		bool addToTail(T&);
 		
 		bool removeHead();
 		bool removeTail();
 		
 		void printForwards();
 		void printBackwards();
+		
+		bool isEmpty();
 		
 		LinkedList();
 		~LinkedList();
@@ -33,30 +48,38 @@ LinkedList<T>::LinkedList()
 template <typename T>
 LinkedList<T>::~LinkedList()
 {
-	if(head != NULL) head->deleteElems();
+	while(head != NULL) removeHead();
+}
+
+template <typename T>
+Element<T>* LinkedList<T>::toElem(const T & item)
+{
+	return new Element<T>(item);
 }
 
 // getHead
 // Get a reference to the head element
 template <typename T>
-Element<T>* LinkedList<T>::getHead()
+T LinkedList<T>::getHead()
 {
-	return head;
+	return head->getValue();
 }
 
 // getTail
 // Get a reference to the tail element
 template <typename T>
-Element<T>* LinkedList<T>::getTail()
+T LinkedList<T>::getTail()
 {
-	return tail;
+	return tail->getValue();
 }
 
 // addToHead
 // Adds a new element to the list, replacing the HEAD
 template <typename T>
-bool LinkedList<T>::addToHead(Element<T>* newHead)
+bool LinkedList<T>::addToHead(const T & item)
 {
+	Element<T>* newHead = toElem(item);
+	
 	if(head != NULL)
 	{
 		head->setPrevious(newHead);
@@ -75,8 +98,10 @@ bool LinkedList<T>::addToHead(Element<T>* newHead)
 // addToTail
 // Adds new element to the list, replacing the TAIL
 template <typename T>
-bool LinkedList<T>::addToTail(Element<T>* newTail)
+bool LinkedList<T>::addToTail(T & item)
 {
+	Element<T>* newTail = toElem(item);
+	
 	if(tail != NULL)
 	{
 		tail->setNext(newTail);
@@ -99,6 +124,7 @@ bool LinkedList<T>::removeHead()
 {
 	if(head == tail)
 	{
+		delete head;
 		head = NULL;
 		tail = NULL;
 	}
@@ -152,7 +178,12 @@ void LinkedList<T>::printBackwards()
 	if(tail != NULL) tail->printPrevious();
 }
 
-
+// Checks if the list is empty or not
+template <typename T>
+bool LinkedList<T>::isEmpty()
+{
+	return head == NULL;
+}
 
 
 
