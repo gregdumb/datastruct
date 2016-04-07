@@ -1,15 +1,19 @@
+// REMEMBER:
+// T 		= AN INT
+// ELEMENT 	= THE OBJECT/POINTER
+
 template <class T>
 class Element
 {
-	public:
+	private:
 		T value;
 		Element* next;
 		Element* previous;
 	
 	public:
 		T getValue();
-		T getNext();
-		T getPrevious();
+		Element* getNext();
+		Element* getPrevious();
 		
 		bool setValue(T);
 		bool setNext(Element*);
@@ -18,6 +22,20 @@ class Element
 		void printRemaining(); // prints out all elements after this one, inclusive
 		void printPrevious(); // prints all elements before this one, inclusive
 };
+
+// Returns the next item in the list of elements
+template <typename T>
+Element<T>* Element<T>::getNext()
+{
+	return next;
+}
+
+// Returns the previous item in the list of elements
+template <typename T>
+Element<T>* Element<T>::getPrevious()
+{
+	return previous;
+}
 
 template <typename T>
 inline

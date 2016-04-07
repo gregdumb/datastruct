@@ -9,10 +9,13 @@ class LinkedList
 		bool addToHead(Element<T>*);
 		bool addToTail(Element<T>*);
 		
+		bool removeHead();
+		bool removeTail();
+		
 		void printForwards();
 		void printBackwards();
 		
-	LinkedList();
+		LinkedList();
 };
 
 template <typename T>
@@ -59,6 +62,25 @@ bool LinkedList<T>::addToTail(Element<T>* newTail)
 	
 	return true;
 }
+
+template <typename T>
+bool LinkedList<T>::removeHead()
+{
+	if(head == tail)
+	{
+		head = NULL;
+		tail = NULL;
+	}
+	else
+	{
+		Element<T>* newHead = head->getNext();
+		//delete head;
+		head = newHead;
+	}
+	
+	return true;
+}
+	
 
 // Prints out all elements, from HEAD TO TAIL
 template <typename T>

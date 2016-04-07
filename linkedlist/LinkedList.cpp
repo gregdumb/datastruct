@@ -2,6 +2,7 @@
 
 #include "element.h"
 #include "linkedlist.h"
+#include "stack.h"
 
 
 int main()
@@ -19,10 +20,12 @@ int main()
 	LinkedList<int> * list = new LinkedList<int>;
 	list->addToHead(elem1);
 	list->addToHead(elem2);
-	
+	list->addToHead(elem3);
+	std::cout << "Forward: " << std::endl;
 	list->printForwards();
 	
-	list->addToHead(elem3);
+	list->removeHead();
+	std::cout << "Removed head: " << std::endl;
 	list->printForwards();
 	
 	//std::cout << elem1->getValue() << std::endl;
