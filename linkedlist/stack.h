@@ -47,8 +47,7 @@ bool Stack<T>::push(const T item)
 {
 	if(list != NULL)
 	{
-		list->addToHead(item);
-		return true;
+		return list->addToHead(item);
 	}
 	
 	return false;
@@ -60,8 +59,7 @@ bool Stack<T>::pop(T & item)
 {
 	if(list->isEmpty()) return false;
 	item = list->getHead();
-	list->removeHead();
-	return true;
+	return list->removeHead();
 }
 
 // Get value of top of stack
@@ -69,6 +67,7 @@ template <typename T>
 bool Stack<T>::getTop(T & item)
 {
 	item = list->getHead();
+	return true;
 }
 
 // Check if stack is empty

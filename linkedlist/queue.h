@@ -17,13 +17,18 @@ class Queue
 		LinkedList<T> * list;
 		
 	public:
-		bool enqueue(const T & item);
-		bool dequeue(T & item);
+		bool enqueue(T item);
+		T dequeue();
 		bool isEmpty();
 		void print();
 		
 		Queue();
 		~Queue();
+		
+		void printHead()
+		{
+			std::cout << list->getHead() << std::endl;
+		}
 };
 
 // Constructor
@@ -43,7 +48,7 @@ Queue<T>::~Queue()
 // enqueue
 // Put a new object at the start of the queue
 template <typename T>
-bool Queue<T>::enqueue(const T & item)
+bool Queue<T>::enqueue(T item)
 {
 	list->addToHead(item);
 	return true;
@@ -52,10 +57,11 @@ bool Queue<T>::enqueue(const T & item)
 // dequeue
 // Put a new object at the start of the queue
 template <typename T>
-bool Queue<T>::dequeue(T & item)
+T Queue<T>::dequeue()
 {
-	item = list->getTail();
+	T item = list->getTail();
 	list->removeTail();
+	return item;
 }
 
 // Check if queue is empty
@@ -65,7 +71,7 @@ bool Queue<T>::isEmpty()
 	return list->isEmpty();
 }
 
-// Print out all elements in the queue from Exit/End to Entrance/Start
+// Print out all elements in the queue from Entrance/Start to Exit/End
 template <typename T>
 void Queue<T>::print()
 {

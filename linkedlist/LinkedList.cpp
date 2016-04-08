@@ -9,17 +9,7 @@
 
 
 int main()
-{
-	//element * E = new element<int>();
-	Element<int> * elem1 = new Element<int>;
-	elem1->setValue(420);
-	
-	Element<int> * elem2 = new Element<int>;
-	elem2->setValue(69);
-	
-	Element<int> * elem3 = new Element<int>;
-	elem3->setValue(360);
-	
+{	
 	Stack<int> * stack = new Stack<int>;
 	Queue<int> * queue = new Queue<int>;
 	

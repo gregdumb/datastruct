@@ -22,7 +22,7 @@ class LinkedList
 		T getHead();
 		T getTail();
 		
-		bool addToHead(const T & item);
+		bool addToHead(T item);
 		bool addToTail(T&);
 		
 		bool removeHead();
@@ -76,9 +76,9 @@ T LinkedList<T>::getTail()
 // addToHead
 // Adds a new element to the list, replacing the HEAD
 template <typename T>
-bool LinkedList<T>::addToHead(const T & item)
+bool LinkedList<T>::addToHead(T item)
 {
-	Element<T>* newHead = toElem(item);
+	Element<T>* newHead = new Element<T>(item);
 	
 	if(head != NULL)
 	{
@@ -133,6 +133,7 @@ bool LinkedList<T>::removeHead()
 		Element<T>* newHead = head->getNext();
 		delete head;
 		head = newHead;
+		head->setPrevious(NULL);
 	}
 	
 	return true;
@@ -157,6 +158,7 @@ bool LinkedList<T>::removeTail()
 		Element<T>* newTail = tail->getPrevious();
 		delete tail;
 		tail = newTail;
+		tail->setNext(NULL);
 	}
 	
 	return true;
