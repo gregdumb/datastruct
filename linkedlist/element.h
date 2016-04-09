@@ -23,15 +23,14 @@ class Element
 		bool setNext(Element*);
 		bool setPrevious(Element*);
 		
-		void printRemaining(); // prints out all elements after this one, inclusive
-		void printPrevious(); // prints all elements before this one, inclusive
-		
-		void deleteElems();
+		void printRemaining();
+		void printPrevious();
 		
 		Element();
 		Element(T);
 };
 
+// Default constructor
 template <typename T>
 Element<T>::Element()
 {
@@ -39,6 +38,7 @@ Element<T>::Element()
 	previous = NULL;
 }
 
+// Custom constructor
 template <typename T>
 Element<T>::Element(T newVal)
 {
@@ -61,6 +61,7 @@ Element<T>* Element<T>::getPrevious()
 	return previous;
 }
 
+// Set the T value of the element
 template <typename T>
 inline
 bool Element<T>::setValue(T newVal)
@@ -69,6 +70,7 @@ bool Element<T>::setValue(T newVal)
 	return true;
 }
 
+// Set the pointer to the next in the chain
 template <typename T>
 bool Element<T>::setNext(Element* newNext)
 {
@@ -76,6 +78,7 @@ bool Element<T>::setNext(Element* newNext)
 	return true;
 }
 
+// Set the pointer to the next in the chain
 template <typename T>
 bool Element<T>::setPrevious(Element* newPrevious)
 {
@@ -83,6 +86,7 @@ bool Element<T>::setPrevious(Element* newPrevious)
 	return true;
 }
 
+// Get the T value of the element
 template <typename T>
 T Element<T>::getValue()
 {
@@ -93,7 +97,7 @@ T Element<T>::getValue()
 template <typename T>
 void Element<T>::printRemaining()
 {
-	std::cout << value;
+	std::cout << value << " ";
 	if(next != NULL) next->printRemaining();
 	else std::cout << std::endl;
 }
@@ -102,18 +106,9 @@ void Element<T>::printRemaining()
 template <typename T>
 void Element<T>::printPrevious()
 {
-	std::cout << value;
+	std::cout << value << " ";
 	if(previous != NULL) previous->printPrevious();
 	else std::cout << std::endl;
-}
-
-template <typename T>
-void Element<T>::deleteElems()
-{
-	if(getNext() != NULL)
-		getNext()->deleteElems();
-		
-	// delete this; //was causing crash
 }
 
 

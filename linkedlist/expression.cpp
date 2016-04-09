@@ -4,7 +4,7 @@
 #include "stack.h"
 #include "queue.h"
 
-
+// Gets the input of the user
 std::string getInput()
 {
 	std::cout << "Please enter the expression to be evaluated: ";
@@ -14,12 +14,13 @@ std::string getInput()
 	return input;
 }
 
+// Returns true if ch is an operand, +-*/^()
 bool isOperand(char ch)
 {
 	return !(ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '^' || ch == '(' || ch == ')');
-	//return true;
 }
 
+// Get in-stack priorety of operator
 int isp(char ch)
 {
 	switch(ch)
@@ -41,6 +42,7 @@ int isp(char ch)
 	}
 }
 
+// Get incoming priorety of operator
 int icp(char ch)
 {
 	switch(ch)
@@ -70,10 +72,10 @@ int main()
 	
 	// Create stacks & queues
 	Queue<char> * Q1 = new Queue<char>; // Original expression
-	Stack<char> * S1 = new Stack<char>; 
+	Queue<char> * Q2 = new Queue<char>; // Postfix expression
+	Stack<char> * S1 = new Stack<char>; // Stack for operators
 	
-	
-	// Enqueue original expression in Q1
+	// Enqueue original expression string in Q1
 	for(int i = 0; i < input.length(); i++)
 	{
 		if(input.at(i) != ' ')
@@ -81,49 +83,51 @@ int main()
 			Q1->enqueue(input.at(i));
 		}
 	}
+	
+	// Add a stop character
 	Q1->enqueue('#');
 	
+	// Add a stop character to the bottom of the stack
 	S1->push('#');
 	
+	// Print out the infix queue
 	std::cout << "Contents of queue: ";
 	Q1->print();
 	
+	// Character to whole the current character we are analyzing
 	char c;
 	c = Q1->dequeue();
-	//std::cout << "!!! Did first dequeue from Q1: " << c << std::endl;
 	
+	// Character to hold the top of the stack
 	char sTop;
 	S1->getTop(sTop);
 	
+	// Placeholder character to use for popping and pushing
 	char op;
 	
-	Queue<char> * Q2 = new Queue<char>;
-	
+	// Main infix-to-postfix loop:
 	while(c != '#')
 	{
-		//std::cout << "===================================" << std::endl;
-		
+		// Enqueue numbers straightaway
 		if(isOperand(c))
 		{
 			Q2->enqueue(c);
-			//std::cout << "Enqueued " << c << std::endl;
-			//std::cout << "Queue 2:";
-			//Q2->print();
-			//std::cout << "Queue 2 Head: ";
-			//Q2->printHead();
 		}
+		// If we have reached the end of a set of brackets:
 		else if(c == ')')
 		{
+			// Put the collected operators into the queue
 			S1->getTop(sTop);
 			while(!S1->isEmpty() && sTop != '(')
 			{
 				S1->pop(op);
 				Q2->enqueue(op);
-				//std::cout << "--- 2nd while: Popped and enqueued " << op << std::endl;
 				S1->getTop(sTop);
 			}
+			// Remove the '('
 			S1->pop(op);
 		}
+		// If c is an operator
 		else
 		{
 			S1->getTop(sTop);
@@ -136,21 +140,12 @@ int main()
 			S1->push(c);
 		}
 		
-		/*std::cout << "%% LOOP RESULTS %%" << std::endl;
-		std::cout << "Q1: "; 
-		Q1->print();
-		std::cout << "Q2: ";
-		Q2->print();
-		std::cout << "S1: ";
-		S1->print();
-		std::cout << "%% END OF LOOP %%" << std::endl;*/
-		
+		// Get new value for c:
 		c = Q1->dequeue();
 	}
 	
-	//std::cout << "THE STACK:";
-	//S1->print();
-	
+	// There will be some operators leftover in the stack,
+	// now we will move these over.
 	if(!S1->isEmpty())
 	{
 		S1->getTop(sTop);
@@ -160,22 +155,29 @@ int main()
 			Q2->enqueue(op);
 			S1->getTop(sTop);
 		}
-	}	
+	}
 	
+	// Print out the postfix:
 	std::cout << "Postfix Queue: ";
 	Q2->print();
 	
-	
+	// Stack that will hold our actual numbers during evaluation
 	Stack<int> * S2 = new Stack<int>;
 	
-	while(!Q2->isEmpty())
+	bool error = false;
+	
+	// Evaluation loop
+	while(!Q2->isEmpty() && !error)
 	{
 		op = Q2->dequeue();
+		
+		// If we have a number, put it on the number stack
 		if(isOperand(op))
 		{
 			int opint = op - '0';
 			S2->push(opint);
 		}
+		// If we have an operator, perform the operation
 		else
 		{
 			int op2, op1, result;
@@ -192,7 +194,16 @@ int main()
 					result = op1 * op2;
 					break;
 				case '/':
-					result = op1 / op2;
+					if(op2 != 0)
+					{
+						result = op1 / op2;
+					}
+					else
+					{
+						std::cout << "Error! Division by zero not allowed!" << std::endl;
+						error = true;
+						result = 0;
+					}
 					break;
 				case '+':
 					result = op1 + op2;
@@ -206,12 +217,33 @@ int main()
 					break;
 			}
 			
+			// Put the result of the operation back on the stack
 			S2->push(result);
-		}	
+		}
+		
+		// For debugging purposes: show contents of stack and queue every loop
+		std::cout << "Contents of queue: ";
+		Q2->print();
+		std::cout << "Contents of stack: ";
+		S2->print();
+		
 	}
 	
-	std::cout << "Result (S2): ";
-	S2->print();
+	// Print out the result
+	if(!error)
+	{
+		std::cout << "The result is: ";
+		S2->print();
+	}
+	else
+	{
+		std::cout << "Program terminated due to division by zero!" << std::endl;
+	}
+	
+	delete Q1;
+	delete Q2;
+	delete S1;
+	delete S2;
 }
 
 

@@ -45,19 +45,20 @@ LinkedList<T>::LinkedList()
 	tail = NULL;
 }
 
+// Destructor
 template <typename T>
 LinkedList<T>::~LinkedList()
 {
 	while(head != NULL) removeHead();
 }
 
+// Convert T to an element of type T
 template <typename T>
 Element<T>* LinkedList<T>::toElem(const T & item)
 {
 	return new Element<T>(item);
 }
 
-// getHead
 // Get a reference to the head element
 template <typename T>
 T LinkedList<T>::getHead()
@@ -65,7 +66,6 @@ T LinkedList<T>::getHead()
 	return head->getValue();
 }
 
-// getTail
 // Get a reference to the tail element
 template <typename T>
 T LinkedList<T>::getTail()
@@ -73,12 +73,11 @@ T LinkedList<T>::getTail()
 	return tail->getValue();
 }
 
-// addToHead
 // Adds a new element to the list, replacing the HEAD
 template <typename T>
 bool LinkedList<T>::addToHead(T item)
 {
-	Element<T>* newHead = new Element<T>(item);
+	Element<T>* newHead = toElem(item);
 	
 	if(head != NULL)
 	{
@@ -95,7 +94,6 @@ bool LinkedList<T>::addToHead(T item)
 	return true;
 }
 
-// addToTail
 // Adds new element to the list, replacing the TAIL
 template <typename T>
 bool LinkedList<T>::addToTail(T & item)
@@ -117,7 +115,6 @@ bool LinkedList<T>::addToTail(T & item)
 	return true;
 }
 
-// removeHead
 // Deletes the head element
 template <typename T>
 bool LinkedList<T>::removeHead()
@@ -139,7 +136,6 @@ bool LinkedList<T>::removeHead()
 	return true;
 }
 
-// removeTail
 // Deletes the tail element
 template <typename T>
 bool LinkedList<T>::removeTail()
@@ -163,21 +159,21 @@ bool LinkedList<T>::removeTail()
 	
 	return true;
 }
-	
-// printForwards
+
 // Prints out all elements, from HEAD TO TAIL
 template <typename T>
 void LinkedList<T>::printForwards()
 {
 	if(head != NULL) head->printRemaining();
+	else std::cout << std::endl;
 }
 
-// printBackwards
 // Prints out all elements, from TAIL TO HEAD
 template <typename T>
 void LinkedList<T>::printBackwards()
 {
 	if(tail != NULL) tail->printPrevious();
+	else std::cout << std::endl;
 }
 
 // Checks if the list is empty or not

@@ -24,11 +24,6 @@ class Queue
 		
 		Queue();
 		~Queue();
-		
-		void printHead()
-		{
-			std::cout << list->getHead() << std::endl;
-		}
 };
 
 // Constructor
@@ -45,7 +40,6 @@ Queue<T>::~Queue()
 	delete list;
 }
 
-// enqueue
 // Put a new object at the start of the queue
 template <typename T>
 bool Queue<T>::enqueue(T item)
@@ -54,7 +48,6 @@ bool Queue<T>::enqueue(T item)
 	return true;
 }
 
-// dequeue
 // Put a new object at the start of the queue
 template <typename T>
 T Queue<T>::dequeue()
@@ -71,7 +64,7 @@ bool Queue<T>::isEmpty()
 	return list->isEmpty();
 }
 
-// Print out all elements in the queue from Entrance/Start to Exit/End
+// Print out all elements in the queue from Exit to Entrance (Tail to Head)
 template <typename T>
 void Queue<T>::print()
 {
